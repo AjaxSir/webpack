@@ -28,8 +28,8 @@ module.exports = {
                         //                     ie: ">= 8",
                         //                     chrome: "64"
                         //                 },
-                        //                 "useBuiltIns": "usage",
-                        //                 "corejs": 2
+                        //                 "useBuiltIns": "usage", usage 会根据配置的浏览器兼容，以及你代码中用到的 API 来进行 polyfill，实现了按需添加。
+                        //                 "corejs": 2 // 
                         //             }
                         //         ]
                         //     ]
