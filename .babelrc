@@ -1,23 +1,16 @@
 {
-  "preset": [
+  "presets": [
     [
-        "env",
+        "@babel/preset-env",
         {
-          "target": {
-            "browsers": ["last 2 versions", "safari >= 7"] // 每个浏览器最后两个版本和safari大于等于7版本所需的polyfill代码转换
-            // "browsers": "> 5%" // 支持市场份额超过5%的浏览器
+          "targets": {
+            "browsers": ["last 2 versions", "safari >= 7"]
           },
             "useBuiltIns": "usage",
             "corejs": 2
-        }
-    ],
-    "stage-2"
+        },
+        "stage-2"
+    ]
+    
   ]
 }
-// stage0 (https://babeljs.io/docs/en/babel-preset-stage-0) 只是一个美好激进的想法，一些 Babel 插件实现了对这些特性的支持 ，但是不确定是否会被定为标准.
-
-//stage1 (https://babeljs.io/docs/en/babel-preset-stage-1) 值得被纳入标准的特性.
-
-// stage2 (https://babeljs.io/docs/en/babel-preset-stage-2) 该特性规范己经被起草，将会被纳入标准里.
-
-// stage3 (https://babeljs.io/docs/en/babel-preset-stage-3) 该特性规范已经定稿，大浏览器厂商和 Node.js 社区己开始着手实现.

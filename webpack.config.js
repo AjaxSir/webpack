@@ -11,7 +11,7 @@ module.exports = {
         },
         module: {
             rules: [{
-                test: '/\.js/',
+                test: /\.js$/,
                 exclude: '/node_modules/',
                 // loader: 'babel-loader',     //这是简写 从右至左
                 // options: {},
@@ -36,6 +36,9 @@ module.exports = {
                         // }
                     },
                 ]
+            }, {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
             }]
         },
         externals: {
@@ -44,7 +47,10 @@ module.exports = {
         mode: 'production',
         plugins: [
             new CleanWebpackPlugin(),
-            new HtmlWebpackPlugin()
+            new HtmlWebpackPlugin({
+                template: './src/index.html',
+                title: 'webpack',
+            })
         ]
     }
     // @babel/core是babel的核心库，所有的核心Api都在这个库里，这些Api供babel-loader调用
@@ -63,3 +69,15 @@ module.exports = {
 
 // babel-loader: webpack并不知道应该怎么去调用这些规则去编译js。这时就需要babel-loader了，
 // 它作为一个中间桥梁，通过调用babel/core中的api来告诉webpack要如何处理js。
+
+
+// stage0 (https://babeljs.io/docs/en/babel-preset-stage-0) 只是一个美好激进的想法，一些 Babel 插件实现了对这些特性的支持 ，但是不确定是否会被定为标准.
+
+//stage1 (https://babeljs.io/docs/en/babel-preset-stage-1) 值得被纳入标准的特性.
+
+// stage2 (https://babeljs.io/docs/en/babel-preset-stage-2) 该特性规范己经被起草，将会被纳入标准里.
+
+// stage3 (https://babeljs.io/docs/en/babel-preset-stage-3) 该特性规范已经定稿，大浏览器厂商和 Node.js 社区己开始着手实现.
+
+// "browsers": "> 5%" // 支持市场份额超过5%的浏览器
+// 每个浏览器最后两个版本和safari大于等于7版本所需的polyfill代码转换 "browsers": ["last 2 versions", "safari >= 7"]
