@@ -39,7 +39,12 @@ module.exports = {
             }, {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader']
-            }]
+            },
+            {
+                test: /\.scss$/,
+                use: ['style-loader', 'css-loader', 'sass-loader']
+            }
+            ]
         },
         externals: {
             jquery: 'jQuery' // 不常更新的外部文件不需要打包 1. html引入CDN的资源
