@@ -1,6 +1,8 @@
 .single {
+    color: white;
     &:hover {
         cursor: pointer;
         background-color: red;
+        background: url('../img/logo.jpeg');
     }
 }

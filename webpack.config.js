@@ -1,61 +1,84 @@
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // 打包之前删除webpack缓存
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // 会自动生成html 并引入entry里面的文件
+const webpack = require('webpack');
 module.exports = {
         entry: {
             index: './src/index.js'
         },
         output: {
             path: path.join(__dirname, './dist'),
-            filename: '[name]-[chunkhash].js'
+            filename: 'build.js'
+        },
+        devServer: {
+            contentBase: path.resolve(__dirname, './src/'),
+            // contentBase: './',
+            port: 8000
+                // host: 'localhost'
         },
         module: {
             rules: [{
-                test: /\.js$/,
-                exclude: '/node_modules/',
-                // loader: 'babel-loader',     //这是简写 从右至左
-                // options: {},
-                use: [ //使用use 完整写法
-                    {
-                        loader: 'babel-loader',
-                        // options: { // 也可创建一个.babelrc文件配置
-                        //     "preset": [
-                        //         [
-                        //             "@babel/preset-env",
-                        //             {
-                        //                 targets: {
-                        //                     edge: '17',
-                        //                     ie: ">= 8",
-                        //                     chrome: "64"
-                        //                 },
-                        //                 "useBuiltIns": "usage", usage 会根据配置的浏览器兼容，以及你代码中用到的 API 来进行 polyfill，实现了按需添加。
-                        //                 "corejs": 2 // 
-                        //             }
-                        //         ]
-                        //     ]
-                        // }
-                    },
-                ]
-            }, {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
-            },
-            {
-                test: /\.scss$/,
-                use: ['style-loader', 'css-loader', 'sass-loader']
-            }
+                    test: /\.html$/,
+                    loader: 'html-withimg-loader'
+                },
+                {
+                    test: /\.js$/,
+                    exclude: '/node_modules/',
+                    // loader: 'babel-loader',     //这是简写 从右至左
+                    // options: {},
+                    use: [ //使用use 完整写法
+                        {
+                            loader: 'babel-loader',
+                            // options: { // 也可创建一个.babelrc文件配置
+                            //     "preset": [
+                            //         [
+                            //             "@babel/preset-env",
+                            //             {
+                            //                 targets: {
+                            //                     edge: '17',
+                            //                     ie: ">= 8",
+                            //                     chrome: "64"
+                            //                 },
+                            //                 "useBuiltIns": "usage", usage 会根据配置的浏览器兼容，以及你代码中用到的 API 来进行 polyfill，实现了按需添加。
+                            //                 "corejs": 2 // 
+                            //             }
+                            //         ]
+                            //     ]
+                            // }
+                        },
+                    ]
+                }, {
+                    test: /\.css$/,
+                    use: ['style-loader', 'css-loader']
+                },
+                {
+                    test: /\.scss$/,
+                    use: ['style-loader', 'css-loader', 'sass-loader']
+                },
+                {
+                    test: /\.(png|jpg|jpeg)$/,
+                    use: [{
+                        loader: 'url-loader',
+                        options: {
+                            limit: 10000,
+                            esModule: false,
+                            name: './images/[name].[hash].[ext]'
+                        }
+                    }]
+                }
             ]
         },
         externals: {
             jquery: 'jQuery' // 不常更新的外部文件不需要打包 1. html引入CDN的资源
         },
-        mode: 'production',
+        mode: 'development',
         plugins: [
             new CleanWebpackPlugin(),
             new HtmlWebpackPlugin({
                 template: './src/index.html',
-                title: 'webpack',
-            })
+                title: 'webpack'
+            }),
+            new webpack.HotModuleReplacementPlugin()
         ]
     }
     // @babel/core是babel的核心库，所有的核心Api都在这个库里，这些Api供babel-loader调用
@@ -86,3 +109,6 @@ module.exports = {
 
 // "browsers": "> 5%" // 支持市场份额超过5%的浏览器
 // 每个浏览器最后两个版本和safari大于等于7版本所需的polyfill代码转换 "browsers": ["last 2 versions", "safari >= 7"]
+
+
+// publicPath:'./'的原因就是让我们html中img标签的路径正确
