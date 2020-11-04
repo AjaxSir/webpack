@@ -1,5 +1,5 @@
 .single {
     width: 100px;
-    height: 40px;
+    height: auto;
     background-color: blue;
 }
